@@ -79,3 +79,14 @@ export const deletePerson = async (req, res) => {
         res.status(409).json({message: error.message})
     }
 }
+
+export const updatePerson = async (req, res) => {
+    const {id} = req.params
+    const personUpdates = req.body
+    try {
+        const updatedPerson = await Person.findByIdAndUpdate(id, personUpdates, {new: true})
+        res.status(200).json(updatedPerson)
+    } catch (error) {
+        res.status(400).json({message: error.message})
+    }
+}
