@@ -37,7 +37,7 @@ export const createPerson = async (req, res) => {
         const newPerson = new Person(person)
         const newBirthdayEvent = new Event({
             name: 'Birthday',
-            people: [newPerson],
+            people: [newPerson._id],
             date: person.dob,
             picture: 'https://res.cloudinary.com/hz3gmuqw6/image/upload/c_fill,f_auto,q_60,w_750/v1/goldenapron/636d99989fdc2'
         })
@@ -46,13 +46,13 @@ export const createPerson = async (req, res) => {
         if (person.relationship === 'Partner') {
             const newEvent = new Event({
                 name: 'Anniversary',
-                people: [newPerson],
+                people: [newPerson._id],
                 date: person.anniversary,
                 picture: 'https://images.ctfassets.net/iyiurthvosft/34CGIfinmuBbubQuEKmKRc/5aa2de9aaf6e1bbac3126d95a9cd96d1/iStock-860821478.jpg?fm=jpg&fl=progressive&q=50&w=1200'
             })
             const valentines = new Event({
                 name: "Valentine's",
-                people: [newPerson],
+                people: [newPerson._id],
                 date: "14/02/2024",
                 picture: 'http://www.dynamitenews.com/images/2019/02/13/valentines-day-2019-celebrating-day-of-love-in-a-healthy-manner/36ad0ba.jpg'
             })
@@ -70,10 +70,7 @@ export const deletePerson = async (req, res) => {
     try {
         if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No Person with that id')
         await Person.findByIdAndDelete(id)
-        await Event.updateMany(
-            { 'people._id': id },
-            { $pull: { people: { _id: id } } }
-        )
+        await Event.updateMany({ people: id }, { $pull: { people: id } });
         res.json({message: 'Person deleted successfully'})
     } catch (error) {
         res.status(409).json({message: error.message})
