@@ -7,6 +7,7 @@ import connectDB from './mongodb/connect.js'
 import personRoutes from './routes/person.js'
 import eventRoutes from './routes/event.js'
 import productRoutes from './routes/products.js'
+import userRoutes from './routes/user.js'
 import { getQueries } from './controllers/openai.js'
 
 dotenv.config()
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({limit: "30mb", extended: true}))
 app.use('/person', personRoutes)
 app.use('/event', eventRoutes)
 app.use('/product', productRoutes)
+app.use('/user', userRoutes)
 
 app.post('/openai', getQueries)
 

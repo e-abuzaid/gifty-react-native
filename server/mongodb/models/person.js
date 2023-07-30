@@ -1,16 +1,17 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const Person = new mongoose.Schema({
-    name: {type: String, required: true},
-    dob: {type: String, required: true},
-    gender: {type: String, required: true},
-    relationship: {type: String, required: true},
-    occupation: {type: String, required: true},
-    interests: [String],
-    anniversary: {type: String},
-    picture: {type: String},
-})
+  user: { type: String, required: true },
+  name: { type: String, required: true },
+  dob: { type: String, required: true },
+  gender: { type: String, required: true },
+  relationship: { type: String, required: true },
+  occupation: { type: String, required: true },
+  interests: [String],
+  anniversary: { type: String },
+  picture: { type: String },
+});
 
-const PersonSchema = mongoose.model('Person', Person)
+const PersonSchema = mongoose.model("Person", Person);
 
-export default PersonSchema
+export default PersonSchema;
